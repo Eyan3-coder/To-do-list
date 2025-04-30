@@ -17,60 +17,89 @@
       </div>
 
       <div class="list-container">
-        <div class="list-container1">
-          <ul>
-            <span class="completed"></span>
-          </ul>
-        </div>
+        <ul class="task-list"></ul>
       </div>
-      <p class="try"></p>
     </main>
 
     <script>
       const inputBox = document.querySelector(".addBar");
-      const listContainer = document.querySelector(".list-container");
+      const taskList = document.querySelector(".task-list");
 
       function addTask() {
         if (inputBox.value === "") {
           alert("Add some task");
-        } else {
-          let checkBox = document.createElement("input");
-          checkBox.type = "radio";
-          checkBox.name = "checkBox";
-          checkBox.style.float = "left";
-          checkBox.style.marginRight = "4px";
-          
-          let li = document.createElement("li");
-          li.textContent = inputBox.value;
-          li.style.backgroundColor = "white";
-          li.style.borderRadius = "5px";
-          li.style.marginBottom = "10px";
-          li.style.padding = "10px";
-        
-          
+          return;
+        }
 
-          let deleteBtn = document.createElement("button");
-          deleteBtn.textContent = "X";
-          deleteBtn.style.border = "none";
-          deleteBtn.style.background = "none";
-          deleteBtn.style.float = "right";
-          deleteBtn.style.cursor = "pointer";
+        const li = createTaskElement(inputBox.value);
+        taskList.appendChild(li);
+        inputBox.value = "";
+        saveData();
+      }
 
-          li.addEventListener("click", (e) => {
+      function createTaskElement(taskText) {
+        let li = document.createElement("li");
+        li.textContent = taskText;
+        li.style.backgroundColor = "white";
+        li.style.borderRadius = "5px";
+        li.style.marginBottom = "10px";
+        li.style.padding = "10px";
+        li.style.position = "relative";
+
+        let checkBox = document.createElement("input");
+        checkBox.type = "checkbox";
+        checkBox.style.marginRight = "10px";
+        checkBox.addEventListener("click", (e) => {
+          e.stopPropagation();
+          li.classList.toggle("completed");
+          saveData();
+        });
+
+        let deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "X";
+        deleteBtn.style.position = "absolute";
+        deleteBtn.style.right = "10px";
+        deleteBtn.style.top = "10px";
+        deleteBtn.style.border = "none";
+        deleteBtn.style.background = "none";
+        deleteBtn.style.cursor = "pointer";
+        deleteBtn.addEventListener("click", () => {
+          li.remove();
+          saveData();
+        });
+
+        li.prepend(checkBox);
+        li.appendChild(deleteBtn);
+
+        return li;
+      }
+
+      function saveData() {
+        localStorage.setItem("task", taskList.innerHTML);
+      }
+
+      function showTask() {
+        taskList.innerHTML = localStorage.getItem("task") || "";
+        // Reattach event listeners to restored elements
+        const reattach = taskList.querySelectorAll("li");
+        reattach.forEach((li) => {
+          const checkBox = li.querySelector("input[type='checkbox']");
+          const deleteBtn = li.querySelector("button");
+
+          checkBox?.addEventListener("click", (e) => {
             e.stopPropagation();
             li.classList.toggle("completed");
-            // li.remove();
-          });
-          deleteBtn.addEventListener("click", () =>{
-            li.remove();
+            saveData();
           });
 
-          li.appendChild(checkBox);
-          li.appendChild(deleteBtn);
-          listContainer.appendChild(li);
-        }
-        inputBox.value = "";
+          deleteBtn?.addEventListener("click", () => {
+            li.remove();
+            saveData();
+          });
+        });
       }
+
+      showTask();
     </script>
   </body>
 </html>
