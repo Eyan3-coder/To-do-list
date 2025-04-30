@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-do app</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <div class="to-do">
+        <h1 class="toDo-text">To-do list</h1>
+      </div>
+      <div class="addTask">
+        <input type="text" class="addBar" placeholder="Add your task" />
+        <button class="addBtn" onclick="addTask()">Add</button>
+      </div>
+
+      <div class="list-container">
+        <div class="list-container1">
+          <ul>
+            <span class="completed"></span>
+          </ul>
+        </div>
+      </div>
+      <p class="try"></p>
+    </main>
+
+    <script>
+      const inputBox = document.querySelector(".addBar");
+      const listContainer = document.querySelector(".list-container");
+
+      function addTask() {
+        if (inputBox.value === "") {
+          alert("Add some task");
+        } else {
+          let checkBox = document.createElement("input");
+          checkBox.type = "radio";
+          checkBox.name = "checkBox";
+          checkBox.style.float = "left";
+          checkBox.style.marginRight = "4px";
+          
+          let li = document.createElement("li");
+          li.textContent = inputBox.value;
+          li.style.backgroundColor = "white";
+          li.style.borderRadius = "5px";
+          li.style.marginBottom = "10px";
+          li.style.padding = "10px";
+        
+          
+
+          let deleteBtn = document.createElement("button");
+          deleteBtn.textContent = "X";
+          deleteBtn.style.border = "none";
+          deleteBtn.style.background = "none";
+          deleteBtn.style.float = "right";
+          deleteBtn.style.cursor = "pointer";
+
+          li.addEventListener("click", (e) => {
+            e.stopPropagation();
+            li.classList.toggle("completed");
+            // li.remove();
+          });
+          deleteBtn.addEventListener("click", () =>{
+            li.remove();
+          });
+
+          li.appendChild(checkBox);
+          li.appendChild(deleteBtn);
+          listContainer.appendChild(li);
+        }
+        inputBox.value = "";
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+/*Reset*/
+/*Body*/
+body {
+  /* background: linear-gradient(to right, blue, green); */
+
+  background: linear-gradient(
+    to right,
+    rgb(42, 44, 42),
+    rgb(67, 70, 65),
+    rgb(42, 44, 42)
+  );
+  color: rgb(61, 65, 65);
+  padding: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/*Main*/
+main {
+  width: 100%;
+  max-width: 370px;
+  height: 100% ;
+  background-color: rgb(255, 255, 255, 0.88);
+  border-radius: 5%;
+  padding: 30px;
+  margin: 2px;
+}
+.addTask {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+}
+.addBar {
+  border: 0;
+  outline: 0;
+  background-color: rgb(255, 255, 255, 0.7);
+  color: black;
+  padding: 10px;
+  border-radius: 5px;
+  width: 450px;
+  height: 35px;
+}
+.addBar:focus {
+  background-color: rgb(255, 255, 255, 1);
+}
+.addBtn {
+  border: 0;
+  border-radius: 10px;
+  padding: 4px;
+  font-weight: 600;
+  height: 40px;
+  width: 70px;
+}
+.addBtn:focus {
+  box-shadow: 3px 3px 10px;
+}
+.list-container {
+} 
+li {
+  list-style: none;
+  padding: 3px;
+  
+}
+.span {
+}
+.completed {
+  text-decoration: line-through;
+  color: gray;
+}
